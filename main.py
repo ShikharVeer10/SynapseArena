@@ -1,36 +1,54 @@
-import asyncio #Agents to run tasks asychronously
-from agents.optimist import optimist_agent
+import asyncio
+from dotenv import load_dotenv
+from workflows.debate_manager import run_debate_workflow
+
+# Load environment variables (e.g. OPENAI_API_KEY)
+load_dotenv()
 
 async def main():
-    topic="AI will replace most software engineers in future"
-    result=await optimist_agent.run(
-        f"Generate a strong supporting arguement:{topic}"
-    )
-    print("\n STRUCTURED OUTPUT \n")
-    print(result.data)
+    topic = "AI will replace most software engineers in the future"
+    
+    try:
+        result = await run_debate_workflow(topic)
+        
+        print("\n" + "="*80)
+        print(" DEBATE RESULTS RUNTIME SUMMARY ")
+        print("="*80)
+        
+        # 1. Evidence List
+        print("\n📋 GATHERED EVIDENCE:")
+        print("-" * 50)
+        for i, ev in enumerate(result["evidence"], 1):
+            print(f"{i}. [{ev.source}] Credibility: {ev.credibility_score}")
+            print(f"   Content: {ev.content}")
+            print("-" * 50)
 
-    print("\n OUTPUT TYPE \n")
-    print(type(results.data))
+        # 2. PRO Argument
+        pro = result["pro_argument"]
+        print(f"\n🟢 PRO ARGUMENT (Agent: {pro.agent_name} | Confidence: {pro.confidence:.2f}):")
+        print("-" * 50)
+        print(pro.argument)
+        print("-" * 50)
 
-    print("\n INDIVIDUAL FIELDS")
-    print(f"Agent Name: {result.data.agent_name}")
-    print(f"Topic: {result.data.topic}")
-    print(f"Stance: {result.data.stance}")
-    print(f"Confidence: {result.data.confidence}")
-    print(f"Round Number: {result.data.round_number}")
-    print(f"TimeStamp: {result.data.timestamp}")
+        # 3. CON Argument
+        con = result["con_argument"]
+        print(f"\n🔴 CON ARGUMENT (Agent: {con.agent_name} | Confidence: {con.confidence:.2f}):")
+        print("-" * 50)
+        print(con.argument)
+        print("-" * 50)
 
-    print("\n===ARGUEMENT===\n")
+        # 4. Final Verdict
+        verdict = result["verdict"]
+        print(f"\n⚖️ JUDGE VERDICT (Winner: {verdict.winning_stance} | Confidence: {verdict.confidence:.2f}):")
+        print("=" * 80)
+        print(f"Summary: {verdict.summary}")
+        print("-" * 50)
+        print(f"Reasoning:\n{verdict.reasoning}")
+        print("=" * 80)
 
-    print(result.data.arguement)
+    except Exception as e:
+        print(f"\n[!] Error running debate workflow: {e}")
+        print("Please check that your OPENAI_API_KEY is configured in a .env file.")
 
-    print("\n===EVIDENCE===\n")
-
-    for evidence in result.data.evidence:
-        print(f"Source: {evidence.source}")
-        print(f"Content: {evidence.content}")
-        print(f"Credibility: {evidence.credibility_score}")
-        print("-"*50)
-
-if __name__=="main":
+if __name__ == "__main__":
     asyncio.run(main())

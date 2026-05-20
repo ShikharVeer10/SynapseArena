@@ -1,9 +1,9 @@
 from pydantic_ai import Agent
-from models.debate_model import evidence
+from models.debate_model import Evidence
 
-researcher_agent=Agent(
+researcher_agent = Agent(
     model="openai:gpt-4o-mini",
-    result_type=list[Evidence],
+    output_type=list[Evidence],
     system_prompt=(
         "You are a Researcher Agent in a multi-agent debate system. "
         "Your responsibility is to gather factual, evidence-based, and balanced information "
@@ -15,3 +15,4 @@ researcher_agent=Agent(
         "Ensure outputs strictly follow the Evidence schema."
     )
 )
+
