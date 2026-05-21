@@ -1,6 +1,4 @@
 import os
-
-
 def export_debate_to_markdown(memory):
     os.makedirs("debates", exist_ok=True)
     filename = (
@@ -33,7 +31,6 @@ def export_debate_to_markdown(memory):
             f"### Credibility Score\n"
             f"{evidence.credibility_score}\n\n"
         )
-
     markdown += "# Optimist Arguments\n\n"
 
     for argument in memory.optimist_arguments:
@@ -45,7 +42,6 @@ def export_debate_to_markdown(memory):
         markdown += (
             f"{argument.argument}\n\n"
         )
-
     markdown += "# Skeptic Arguments\n\n"
 
     for argument in memory.skeptic_arguments:
@@ -57,23 +53,27 @@ def export_debate_to_markdown(memory):
         markdown += (
             f"{argument.argument}\n\n"
         )
+
     if len(memory.verdicts) > 0:
 
         verdict = memory.verdicts[-1]
+
         markdown += "# Final Verdict\n\n"
+
         markdown += (
             f"## Winning Stance\n"
             f"{verdict.winning_stance}\n\n"
         )
+
         markdown += (
             f"## Reasoning\n"
             f"{verdict.reasoning}\n\n"
         )
+
         markdown += (
             f"## Summary\n"
             f"{verdict.summary}\n\n"
         )
-
     with open(file_path, "w", encoding="utf-8") as file:
 
         file.write(markdown)
