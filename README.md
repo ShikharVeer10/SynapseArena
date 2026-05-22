@@ -78,6 +78,20 @@ to transform raw LLM text into:
 
 ---
 
+### CLI Model Configuration
+The CLI workflow (`main.py`) resolves its model provider from environment variables.
+
+| Variable | Purpose |
+|---|---|
+| `MODEL_PROVIDER` | `openai`, `google`, or `local` |
+| `OPENAI_MODEL` | OpenAI model id (default `gpt-4o-mini`) |
+| `GEMINI_MODEL` | Gemini model id (default `gemini-1.5-flash`) |
+| `LOCAL_API_BASE_URL` | OpenAI-compatible base URL (default `http://localhost:11434/v1`) |
+| `LOCAL_MODEL_NAME` | Local model name (default `llama3.2`) |
+| `LOCAL_API_KEY` | Local API key (default `local-key`) |
+
+---
+
 ### Current Architecture
 
 ```

@@ -1,9 +1,12 @@
 from pydantic_ai import Agent
 from models.debate_model import DebateVerdict
+from model_resolver import DEFAULT_AGENT_MODEL
 
 judge_agent = Agent(
-    model="openai:gpt-4o-mini",
-    result_type=DebateVerdict,
+    model=DEFAULT_AGENT_MODEL,
+    output_type=DebateVerdict,
+    defer_model_check=True,
+    retries=5,
     system_prompt=(
         "You are an objective Judge Agent in a multi-agent debate system.\n"
         "Your task is to review the debate history, which includes:\n"
@@ -15,6 +18,7 @@ judge_agent = Agent(
         "and how effectively they utilized the provided research evidence.\n"
         "Declare a winning stance (PRO, CON, or NEUTRAL if it is a tie).\n"
         "Provide a clear reasoning and a summary of your verdict. "
-        "Strictly adhere to the DebateVerdict schema."
+        "Strictly adhere to the DebateVerdict schema, including topic, winning_stance, "
+        "reasoning, confidence, and summary."
     )
 )
