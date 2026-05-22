@@ -174,4 +174,8 @@ Validated Cognition
 Collaborative Intelligence
 ```
 
+<img width="1638" height="768" alt="image" src="https://github.com/user-attachments/assets/78fc26be-3170-45e3-b486-a1d7327fe2f8" />
+<img width="1727" height="860" alt="image" src="https://github.com/user-attachments/assets/ca03059b-4d14-42c7-adcb-e56d76395060" />
+
+
 This reflects the direction of modern AI systems engineering and agentic AI research.
